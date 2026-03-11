@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel de Simulações</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9;}
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white;}
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #007BFF; color: white; }
+        .form-container { margin-bottom: 20px; padding: 20px; background-color: white; border: 1px solid #ddd;}
+        button { padding: 8px 15px; background-color: #28a745; color: white; border: none; cursor: pointer;}
+        a.btn-delete { color: red; text-decoration: none; font-weight: bold;}
+    </style>
+</head>
+<body>
+
+    <h2>Gerenciador de Dinâmica Molecular</h2>
+
+    <div class="form-container">
+        <h3>Nova Simulação</h3>
+        <form action="/adicionar" method="POST">
+            <input type="text" name="nome_sistema" placeholder="Ex: Enzima 4L40" required>
+            <select name="software">
+                <option value="GROMACS">GROMACS</option>
+                <option value="OpenMM">OpenMM</option>
+                <option value="Outro">Outro</option>
+            </select>
+            <select name="status">
+                <option value="Preparação">Preparação</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Concluído">Concluído</option>
+            </select>
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Sistema</th>
+            <th>Software</th>
+            <th>Status</th>
+            <th>Ação</th>
+        </tr>
+        {% for sim in simulacoes %}
+        <tr>
+            <td>{{ sim['id'] }}</td>
+            <td>{{ sim['nome_sistema'] }}</td>
+            <td>{{ sim['software'] }}</td>
+            <td>{{ sim['status'] }}</td>
+            <td><a href="/deletar/{{ sim['id'] }}" class="btn-delete">Excluir</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
