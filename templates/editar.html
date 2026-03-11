@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Simulação</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9;}
+        .form-container { margin-bottom: 20px; padding: 20px; background-color: white; border: 1px solid #ddd; max-width: 500px;}
+        button { padding: 8px 15px; background-color: #007BFF; color: white; border: none; cursor: pointer; margin-top: 10px;}
+        a { color: #666; text-decoration: none; margin-left: 15px; }
+        input, select { padding: 8px; width: 95%; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Editar Simulação #{{ simulacao['id'] }}</h2>
+
+    <div class="form-container">
+        <form action="/editar/{{ simulacao['id'] }}" method="POST">
+            
+            <label>Nome do Sistema:</label>
+            <input type="text" name="nome_sistema" value="{{ simulacao['nome_sistema'] }}" required>
+            
+            <label>Software:</label>
+            <select name="software">
+                <option value="GROMACS" {% if simulacao['software'] == 'GROMACS' %}selected{% endif %}>GROMACS</option>
+                <option value="OpenMM" {% if simulacao['software'] == 'OpenMM' %}selected{% endif %}>OpenMM</option>
+                <option value="Outro" {% if simulacao['software'] == 'Outro' %}selected{% endif %}>Outro</option>
+            </select>
+            
+            <label>Status:</label>
+            <select name="status">
+                <option value="Preparação" {% if simulacao['status'] == 'Preparação' %}selected{% endif %}>Preparação</option>
+                <option value="Em andamento" {% if simulacao['status'] == 'Em andamento' %}selected{% endif %}>Em andamento</option>
+                <option value="Concluído" {% if simulacao['status'] == 'Concluído' %}selected{% endif %}>Concluído</option>
+            </select>
+            
+            <button type="submit">Salvar Alterações</button>
+            <a href="/">Cancelar</a>
+        </form>
+    </div>
+
+</body>
+</html>
